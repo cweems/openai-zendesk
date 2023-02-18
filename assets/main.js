@@ -1,18 +1,25 @@
+let client;
+
 (function () {
-    var client = ZAFClient.init();
+    client = ZAFClient.init();
     client.invoke('resize', { width: '100%', height: '400px' });
     client.get('ticket').then((data) => {
-
         console.log(data)
     })
 }());
 
-function transfer() {
-    fetch('http://localhost:3000/transfer', { mode: 'no-cors' })
-        .then(() => {
-            console.log('success')
-        })
-        .catch(() => {
-            console.log('err')
-        })
+async function transfer() {
+
+    try {
+        const ticketData = await client.get('ticket.id')
+        const ticketId = ticketData['ticket.id'];
+
+        console.log({ticketId});
+
+        const response = await fetch(`http://localhost:3000/transfer?id=${ticketId}`, { mode: 'no-cors' })
+        console.log(response);
+    } catch(err) {
+        console.warn('Ticket data request error: ', err);
+    }
+
 }

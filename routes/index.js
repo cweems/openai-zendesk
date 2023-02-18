@@ -1,12 +1,24 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-/* GET home page. */
+const getTicketComments = require('../controllers/getTicketComments');
+const getGpt3Summary = require('../controllers/getGpt3Summary');
+const updateTicket = require('../controllers/updateTicket');
 
-router.get('/transfer', function(req, res, next) {
-  console.log(req.body);
-  console.log('received post from frontend');
-  return res.status(200).send('some text');
+router.get('/transfer', async function(req, res, next) {
+
+  try {
+    const ticketId = req.query.id;
+    console.log({ticketId});
+    const comments = await getTicketComments(ticketId);
+    const summary = await getGpt3Summary(comments);
+    await updateTicket(ticketId, summary);
+  
+    res.status(200).send('some text');
+  } catch(err) {
+    console.log(err);
+    res.status(500).send(err);
+  } 
 });
 
 router.get('/*', function(req, res, next) {
