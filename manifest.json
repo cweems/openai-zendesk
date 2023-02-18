@@ -1,0 +1,21 @@
+{
+  "name": "OpenAI Ticket Transfer",
+  "author": {
+    "name": "Charlie Weems",
+    "email": "charlie@swiftly.chat",
+    "url": "https://swiftly.chat"
+  },
+  "defaultLocale": "en",
+  "private": true,
+  "location": {
+    "support": {
+      "ticket_sidebar": {
+        "url": "assets/iframe.html",
+        "flexible": true
+      }
+    }
+  },
+  "signedUrls": true,
+  "version": "1.0.0",
+  "frameworkVersion": "2.0"
+}
