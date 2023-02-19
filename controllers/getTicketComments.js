@@ -1,12 +1,8 @@
-const zendesk = require('node-zendesk')
+const zendeskClient = require('./utils/zendeskClient');
 
 async function getTicketComments (ticketId) {
 
-    const client = zendesk.createClient({
-        username: process.env.ZENDESK_EMAIL,
-        token: process.env.ZENDESK_API_KEY,
-        remoteUri: 'https://d3v-swiftly.zendesk.com/api/v2'
-    })
+    const client = zendeskClient();
 
     try {
         const comments = await client.tickets.getComments(ticketId)

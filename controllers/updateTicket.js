@@ -1,13 +1,9 @@
-const zendesk = require('node-zendesk')
+const zendeskClient = require('./utils/zendeskClient')
 const matchGroupNameToId = require('./utils/matchGroupNameToId');
 
 async function updateTicket(ticketId, ticketProperties) {
 
-    const client = zendesk.createClient({
-        username: process.env.ZENDESK_EMAIL,
-        token: process.env.ZENDESK_API_KEY,
-        remoteUri: process.env.ZENDESK_REMOTE_URI
-    })
+    const client = zendeskClient();
     
     const { summary, priority, assignee } = ticketProperties;
     const groupId = await matchGroupNameToId(assignee);

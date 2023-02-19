@@ -1,11 +1,7 @@
-const zendesk = require('node-zendesk')
+const zendeskClient = require('./zendeskClient')
 
 async function listGroups(groupName) {
-    const client = zendesk.createClient({
-        username: process.env.ZENDESK_EMAIL,
-        token: process.env.ZENDESK_API_KEY,
-        remoteUri: 'https://d3v-swiftly.zendesk.com/api/v2'
-    })
+    const client = zendeskClient();
 
     groupName = groupName.toLowerCase();
 
