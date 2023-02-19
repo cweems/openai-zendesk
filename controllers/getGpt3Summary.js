@@ -23,7 +23,32 @@ function parseGpt3Response(choices) {
     }
 }
 
-async function getGpt3Summary (chatText) {    
+async function getGpt3Summary (chatText) {
+    const configuration = new Configuration({
+        apiKey: process.env.OPENAI_API_KEY,
+    })
+
+    const openai = new OpenAIApi(configuration);
+
+    const prompt = `The following is a conversation between a support agent and a customer, summarize the ticket and provide the next action required.
+    ${chatText}`;
+
+    try {
+        const completion = await openai.createCompletion({
+            model: "text-davinci-003",
+            prompt: prompt,
+            temperature: 0.7,
+            max_tokens: 256
+        })
+
+        return completion.data.choices[0].text;
+    } catch (error) {
+        console.log(error.response);
+        throw new Error(error.response);
+    }
+}
+
+async function getGpt3Triage (chatText) {    
     const configuration = new Configuration({
         apiKey: process.env.OPENAI_API_KEY,
     })
@@ -49,4 +74,4 @@ async function getGpt3Summary (chatText) {
     }
 }
 
-module.exports = getGpt3Summary;
+module.exports = { getGpt3Triage, getGpt3Summary };

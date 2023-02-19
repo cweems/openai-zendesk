@@ -1,7 +1,7 @@
 const zendeskClient = require('./utils/zendeskClient')
 const matchGroupNameToId = require('./utils/matchGroupNameToId');
 
-async function updateTicket(ticketId, ticketProperties) {
+async function triageTicket(ticketId, ticketProperties) {
 
     const client = zendeskClient();
     
@@ -19,15 +19,12 @@ async function updateTicket(ticketId, ticketProperties) {
         }
     }
 
-    console.log(ticketData);
-
     try {
-        const response = await client.tickets.update(ticketId, ticketData)
-        return;
+        await client.tickets.update(ticketId, ticketData)
     } catch (err) {
         console.log(ticketId, ticketProperties)
         throw new Error(err);
     }
 }
 
-module.exports = updateTicket;
+module.exports = triageTicket;
