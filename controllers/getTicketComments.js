@@ -8,7 +8,6 @@ async function getTicketComments (ticketId) {
         remoteUri: 'https://d3v-swiftly.zendesk.com/api/v2'
     })
 
-
     try {
         const comments = await client.tickets.getComments(ticketId)
 

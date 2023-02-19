@@ -1,17 +1,32 @@
 const { Configuration, OpenAIApi } = require("openai");
 
-async function getGpt3Summary (chatText) {
-    console.log('###', process.env.OPENAI_API_KEY)
-    
+
+function parseGpt3Response(choices) {
+    try {
+        let result = choices[0].text;
+
+        // Remove newlines that GPT-3 inserts
+        result = result.replace(/(\r\n|\r|\n)/g, "");
+        resultJSON = JSON.parse(result);
+
+        console.log(resultJSON);
+        return resultJSON;
+    } catch (err) {
+        console.log('Failed to parse GPT-3 response')
+        throw new Error(err);
+    }
+}
+
+async function getGpt3Summary (chatText) {    
     const configuration = new Configuration({
         apiKey: process.env.OPENAI_API_KEY,
     })
     
     const openai = new OpenAIApi(configuration);
     
-    const prompt = `The following is a conversation between a support agent and a customer,
-    can you summarize it and give your rating of the urgency of the request? \n\n
-    ${chatText}`
+    const prompt = `The following is a support ticket from a customer, reply with a json object like this:
+    { "summary": "a summary of the ticket conversation", "priority": "low, normal, high, or urgent.", "assignee": "can be support, legal, or product" }
+    ${chatText}`;
 
     try {
         const completion = await openai.createCompletion({
@@ -21,7 +36,7 @@ async function getGpt3Summary (chatText) {
             max_tokens: 256
         })
 
-        return completion.data.choices
+        return parseGpt3Response(completion.data.choices)
     } catch(error) {
         console.log(error.response);
         throw new Error(error.response);
