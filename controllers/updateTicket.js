@@ -1,14 +1,16 @@
 const zendesk = require('node-zendesk')
+const matchGroupNameToId = require('./utils/matchGroupNameToId');
 
 async function updateTicket(ticketId, ticketProperties) {
 
     const client = zendesk.createClient({
         username: process.env.ZENDESK_EMAIL,
         token: process.env.ZENDESK_API_KEY,
-        remoteUri: 'https://d3v-swiftly.zendesk.com/api/v2'
+        remoteUri: process.env.ZENDESK_REMOTE_URI
     })
     
     const { summary, priority, assignee } = ticketProperties;
+    const groupId = await matchGroupNameToId(assignee);
 
     const ticketData = {
         "ticket": {
@@ -17,9 +19,11 @@ async function updateTicket(ticketId, ticketProperties) {
                 "public": false
             },
             "priority": priority,
-            "assignee": assignee
+            "group_id": groupId,
         }
     }
+
+    console.log(ticketData);
 
     try {
         const response = await client.tickets.update(ticketId, ticketData)

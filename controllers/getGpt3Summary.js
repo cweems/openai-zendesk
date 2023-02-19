@@ -4,14 +4,20 @@ const { Configuration, OpenAIApi } = require("openai");
 function parseGpt3Response(choices) {
     try {
         let result = choices[0].text;
+        console.log({result})
 
         // Remove newlines that GPT-3 inserts
         result = result.replace(/(\r\n|\r|\n)/g, "");
-        resultJSON = JSON.parse(result);
+        let resultJSON = JSON.parse(result);
 
-        console.log(resultJSON);
+        // GPT-3 sometimes returns "Normal or Priority" when Zendesk
+        // expects to receive lowercase.
+        resultJSON.priority = resultJSON.priority.toLowerCase();
+        
         return resultJSON;
     } catch (err) {
+
+        // TODO: Error handle this - put in separate queue.
         console.log('Failed to parse GPT-3 response')
         throw new Error(err);
     }
