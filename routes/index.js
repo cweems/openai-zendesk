@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 const getTicketComments = require('../controllers/getTicketComments');
-const { getGpt3Summary, getGpt3Triage } = require('../controllers/getGpt3Summary');
+const getGpt3Summary = require('../controllers/getGpt3Summary');
+const getGpt3Triage = require('../controllers/getGpt3Triage');
 const updateTicket = require('../controllers/triageTicket');
 const addTicketComment = require('../controllers/addTicketComment');
 
