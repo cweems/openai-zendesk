@@ -6,6 +6,8 @@ An Node Express app for Zendesk that uses GPT-3 to triage and summarize tickets.
 
 📝 **Summarize Tickets:** reduce long ticket discussions for use-cases like agent handoff.
 
+[Demo Video](https://www.loom.com/share/7574b901286640d18913344200648e8e)
+
 ![openai-zendesk-header](https://user-images.githubusercontent.com/1418949/219985712-dfdd8e4d-9da2-437f-aca7-e5463c6be0ca.png)
 
 ## Pre-Requisites
