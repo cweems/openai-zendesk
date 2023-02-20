@@ -6,6 +6,8 @@ An Node Express app for Zendesk that uses GPT-3 to triage and summarize tickets.
 
 📝 **Summarize Tickets:** reduce long ticket discussions for use-cases like agent handoff.
 
+![openai-zendesk-header](https://user-images.githubusercontent.com/1418949/219985712-dfdd8e4d-9da2-437f-aca7-e5463c6be0ca.png)
+
 ## Pre-Requisites
 - **Zendesk Support:** You can create a free trial by following these [instructions](https://developer.zendesk.com/documentation/api-basics/getting-started/getting-a-trial-or-sponsored-account-for-development/).
 - **Zendesk CLI:** Follow [these instructions](https://developer.zendesk.com/documentation/apps/getting-started/using-zcli/).
@@ -108,5 +110,4 @@ To create a Zendesk Trigger, follow these steps:
 
 ---
 
-
-
+To test our your webhook integration, create a new ticket. Your app should receive a webhook within 3 - 5 seconds triggering the ticket to be processed and triaged.

@@ -4,7 +4,6 @@ const { Configuration, OpenAIApi } = require("openai");
 function parseGpt3Response(choices) {
     try {
         let result = choices[0].text;
-        console.log({result})
 
         // Remove newlines that GPT-3 inserts
         result = result.replace(/(\r\n|\r|\n)/g, "");
@@ -67,7 +66,9 @@ async function getGpt3Triage (chatText) {
             max_tokens: 256
         })
 
-        return parseGpt3Response(completion.data.choices)
+        const response = parseGpt3Response(completion.data.choices)
+        console.log(response);
+        return response;
     } catch(error) {
         console.log(error.response);
         throw new Error(error.response);

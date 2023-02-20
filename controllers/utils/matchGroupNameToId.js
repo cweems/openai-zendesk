@@ -18,7 +18,6 @@ async function listGroups(groupName) {
 
         // This could cause trouble if we have multiple
         // overlapping group names, but good enough for a demo.
-        console.log(matchingGroup.id);
         return matchingGroup.id;
 
     } catch(err) {
